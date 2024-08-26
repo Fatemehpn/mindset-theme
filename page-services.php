@@ -26,8 +26,8 @@ get_header();
 			$args = array(
 				'post_type'      => 'fwd-service',
 				'posts_per_page' => -1,
-				'orderBy' => 'title',
-				'order' =>'ASC'
+				'order' =>'ASC',
+				'orderBy' => 'title'
 			);
 			
 			$query = new WP_Query($args);
@@ -54,7 +54,6 @@ get_header();
 					<?php
 					?>
 					<?php
-					$query = new WP_Query($args);
 					while($query->have_posts()){
 						$query->the_post();
 						?>
