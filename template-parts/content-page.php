@@ -26,6 +26,19 @@
 				'after'  => '</div>',
 			)
 		);
+
+		if ( function_exists( 'get_field' ) ) {
+			if ( get_field('physical_address') ) {
+					the_field('physical_address');
+			}
+			if ( get_field('email_address') ) {
+					$email  = get_field( 'email_address' );
+					$mailto = 'mailto:' . $email;
+					?>
+					<p><a href="<?php echo esc_url( $mailto ); ?> "><?php echo esc_html( $email ); ?></a></p>
+					<?php
+			}
+		}
 		?>
 	</div><!-- .entry-content -->
 
