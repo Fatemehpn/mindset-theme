@@ -51,7 +51,7 @@ function fwd_register_custom_post_types() {
   register_post_type( 'fwd-work', $args );
 
 }
-add_action( 'init', 'fwd_register_custom_post_types' );
+
 
 // register testimonials post type
 $labels = array(
@@ -130,57 +130,104 @@ $args = array(
 
 register_post_type( 'fwd-service', $args );
 
+add_action( 'init', 'fwd_register_custom_post_types' );
 
-// register job postings post type
+// -----------------------------------------------------------------
+// register the custom taxanomies
+function fwd_register_taxonomies() {
+  // Add Work Category taxonomy
+  $labels = array(
+      'name'              => _x( 'Work Categories', 'taxonomy general name' ),
+      'singular_name'     => _x( 'Work Category', 'taxonomy singular name' ),
+      'search_items'      => __( 'Search Work Categories' ),
+      'all_items'         => __( 'All Work Category' ),
+      'parent_item'       => __( 'Parent Work Category' ),
+      'parent_item_colon' => __( 'Parent Work Category:' ),
+      'edit_item'         => __( 'Edit Work Category' ),
+      'view_item'         => __( 'View Work Category' ),
+      'update_item'       => __( 'Update Work Category' ),
+      'add_new_item'      => __( 'Add New Work Category' ),
+      'new_item_name'     => __( 'New Work Category Name' ),
+      'menu_name'         => __( 'Work Category' ),
+  );
+  $args = array(
+      'hierarchical'      => true,
+      'labels'            => $labels,
+      'show_ui'           => true,
+      'show_in_menu'      => true,
+      'show_in_nav_menu'  => true,
+      'show_in_rest'      => true,
+      'show_admin_column' => true,
+      'query_var'         => true,
+      'rewrite'           => array( 'slug' => 'work-categories' ),
+  );
+  register_taxonomy( 'fwd-work-category', array( 'fwd-work' ), $args );
+
+
+// Featured Taxonomy
 $labels = array(
-  'name'                  => _x( 'Job Postings', 'post type general name' ),
-  'singular_name'         => _x( 'Job Posting', 'post type singular name' ),
-  'menu_name'             => _x( 'Job Postings', 'admin menu' ),
-  'name_admin_bar'        => _x( 'Job Posting', 'add new on admin bar' ),
-  'add_new'               => _x( 'Add New', 'service'  ),
-  'add_new_item'          => __( 'Add New Job Posting'  ),
-  'new_item'              => __( 'New Job Posting' ),
-  'edit_item'             => __( 'Edit Job Posting' ),
-  'view_item'             => __( 'View Job Posting' ),
-  'all_items'             => __( 'All Job Postings'  ),
-  'search_items'          => __( 'Search Job Postings' ),
-  'parent_item_colon'     => __( 'Parent Job Postings:' ),
-  'not_found'             => __( 'No Job Postings found.' ),
-  'not_found_in_trash'    => __( 'No Job Postings found in Trash.' ),
-  'insert_into_item'      => __( 'Insert into Job Posting'),
-  'uploaded_to_this_item' => __( 'Uploaded to this Job Posting'),
+  'name'              => _x( 'Featured', 'taxonomy general name' ),
+  'singular_name'     => _x( 'Featured', 'taxonomy singular name' ),
+  'search_items'      => __( 'Search Featured' ),
+  'all_items'         => __( 'All Featured' ),
+  'parent_item'       => __( 'Parent Featured' ),
+  'parent_item_colon' => __( 'Parent Featured:' ),
+  'edit_item'         => __( 'Edit Featured' ),
+  'update_item'       => __( 'Update Featured' ),
+  'add_new_item'      => __( 'Add New Featured' ),
+  'new_item_name'     => __( 'New Work Featured' ),
+  'menu_name'         => __( 'Featured' ),
 );
+
 $args = array(
-  'labels'             => $labels,
-  'public'             => true,
-  'publicly_queryable' => true,
-  'show_ui'            => true,
-  'show_in_menu'       => true,
-  'show_in_rest'       => true,
-  'query_var'          => true,
-  'rewrite'            => array( 'slug' => 'careers' ),
-  'capability_type'    => 'post',
-  'has_archive'        => true,
-  'hierarchical'       => false,
-  'menu_position'      => 21,
-  'menu_icon'          => 'dashicons-megaphone',
-  'supports'           => array( 'title', 'editor' ),
-  'template'           => array(
-      array( 'core/heading', array( 'level' => 3, 'content' => 'Role', ) ),
-      array( 'core/paragraph', array( 'placeholder' => 'Describe the role...' ) ),
-      array( 'core/heading', array( 'level' => 3, 'content' => 'Requirements' ) ),
-      array( 'core/list' ),
-      array( 'core/heading', array( 'level' => 3, 'content' => 'Location' ) ),
-      array( 'core/paragraph' ),
-      array( 'core/heading', array( 'level' => 3, 'content' => 'How to Apply' ) ),
-      array( 'core/paragraph' ),
-  )
+  'hierarchical'      => true,
+  'labels'            => $labels,
+  'show_ui'           => true,
+  'show_admin_column' => true,
+  'show_in_rest'      => true,
+  'query_var'         => true,
+  'rewrite'           => array( 'slug' => 'featured' ),
 );
-register_post_type( 'fwd-job-posting', $args );
+
+register_taxonomy( 'fwd-featured', array( 'fwd-work' ), $args );
+
+
+
+// CPT Service Taxonomy
+$labels = array(
+  'name'              => _x( 'Service Type', 'taxonomy general name' ),
+  'singular_name'     => _x( 'Service Type', 'taxonomy singular name' ),
+  'search_items'      => __( 'Search Service Type' ),
+  'all_items'         => __( 'All Service Type' ),
+  'parent_item'       => __( 'Parent Service Type' ),
+  'parent_item_colon' => __( 'Parent Service Type:' ),
+  'edit_item'         => __( 'Edit Service Type' ),
+  'update_item'       => __( 'Update Service Type' ),
+  'add_new_item'      => __( 'Add New Service Type' ),
+  'new_item_name'     => __( 'New Work Service Type' ),
+  'menu_name'         => __( 'Service Type' ),
+);
+
+$args = array(
+  'hierarchical'      => true,
+  'labels'            => $labels,
+  'show_ui'           => true,
+  'show_admin_column' => true,
+  'show_in_rest'      => true,
+  'query_var'         => true,
+  'rewrite'           => array( 'slug' => 'service-type' ),
+);
+
+register_taxonomy( 'fwd-service-type', array( 'fwd-service' ), $args );
+}
+
+add_action( 'init', 'fwd_register_taxonomies');
+
 
 // when switching themes, this flushes the permalinks, also it's equivalent of going to settings->permalinks->save changes
 function fwd_rewrite_flush() {
   fwd_register_custom_post_types();
+  fwd_register_taxonomies();
   flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'fwd_rewrite_flush' );

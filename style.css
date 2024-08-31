@@ -265,6 +265,21 @@ button:-moz-focusring,
 	outline: 1px dotted ButtonText;
 }
 
+/* back to top button style */
+.scroll-top {
+	background: transparent;
+	border: none;
+	padding: 1rem;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	cursor: pointer;
+	transition: all ease 0.3s;
+	opacity: 0;
+	color: #fff200;
+}
+
+
 /**
  * Correct the padding in Firefox.
  */
@@ -406,7 +421,8 @@ select,
 optgroup,
 textarea {
 	color: #404040;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; */
+	font-family: "Open Sans", sans-serif;
 	font-size: 1rem;
 	line-height: 1.5;
 }
@@ -419,6 +435,11 @@ h5,
 h6 {
 	clear: both;
 	margin: .75em 0 .25em;
+}
+h1,
+h2,
+h3{
+	font-family: "Raleway", sans-serif;
 }
 
 h1 {
@@ -721,7 +742,10 @@ svg path {
 	}
 
 	.no-sidebar .site,
-	.page-template-full-width .site {
+	.page-template-full-width .site,
+	.home .site, .page-id-12 .site,
+	.post-type-archive-fwd-work .site,
+	.single-fwd-work .site {
 		grid-template-columns: 1fr minmax(0, 1000px) 1fr;
 		grid-template-areas:
 			"header header header"
@@ -978,6 +1002,91 @@ svg path {
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 2em;
 }
+
+
+
+/* Home Page */
+.page-id-8 .home-work article{
+	text-align: center;
+}
+
+.page-id-8 .home-blog article{
+	text-align: center;
+}
+
+.page-id-8 .home-left{
+margin-right: 5%
+}
+
+@media(min-width:50em){
+	.page-id-8 .home-work{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.page-id-8 .home-work article {
+		max-width: 25%;
+	}
+	.page-id-8 .home-work h2{
+		width: 100%;
+	}
+	.page-id-8 .home-left,
+	.page-id-8 .home-right{
+		display: inline-block;
+		width: 45%;
+		vertical-align:top;
+	}
+
+	.page-id-8 .home-blog h2{
+		width:100%
+	}
+	.page-id-8 .home-blog{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.page-id-8 .home-blog article{
+		max-width: 28rem;
+		margin: 0 1rem;
+	}
+}
+
+/* About Page */
+.page-id-12 main .wp-block-pullquote{
+	border: none;
+	padding: 0;
+	text-align: left;
+	font-size: 1rem;
+}
+
+/* Service Page */
+.service-links{
+	border: 6px double #fff200;
+	background-color: #f9f9f9;
+	padding: 0 1rem;
+	text-align: center;
+}
+.service-links ul{
+	margin: 0 auto;
+}
+.service-links li{
+	list-style: none;
+}
+.service-links a{
+	display: block;
+	padding: 1rem;
+}
+
+@media(min-width:50em){
+	.service-links ul{
+		display: flex;
+		justify-content: space-between;
+		text-align: left;
+	}
+	.service-links a{
+		display: inline-block;
+	}
+}
+
 
 /* Footer
 --------------------------------------------- */

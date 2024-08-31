@@ -7,9 +7,9 @@
  * @package FWD_Starter_Theme
  */
 
-if ( ! is_active_sidebar( 'sidebar-1' ) || ! is_active_sidebar('sidebar-2')) {
-	return;
-}
+// if ( ! is_active_sidebar( 'sidebar-1' ) || ! is_active_sidebar('sidebar-2')) {
+// 	return;
+// }
 ?>
 
 <aside id="secondary" class="widget-area">
@@ -20,4 +20,6 @@ if ( ! is_active_sidebar( 'sidebar-1' ) || ! is_active_sidebar('sidebar-2')) {
 		dynamic_sidebar( 'sidebar-1' ); 
 	}
 	?>
+	<?php get_template_part('template-parts/work-categories'); ?>
+	<?php get_template_part('template-parts/fwd-testimonials'); ?>
 </aside><!-- #secondary -->

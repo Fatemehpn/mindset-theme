@@ -40,9 +40,12 @@ get_header();
 
 		endwhile; // End of the loop.
 		?>
+		<!-- Display work categories as a clickable link -->
+		<?php
+			get_template_part('template-parts/work-categories');
+		?>
 
 	</main><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();
