@@ -33,12 +33,13 @@ get_header();
 			$query = new WP_Query($args);
 			
 			if($query->have_posts()){
+				
 				?>
 			
 				<section class="services">
 					<h2><?php esc_html_e('Our Services','fwd'); ?></h2>
-					<nav>
-						<ul style="list-style:none">
+					<nav class='service-links'>
+						<ul>
 					<?php
 					while($query->have_posts()){
 						$query->the_post();
@@ -51,37 +52,62 @@ get_header();
 					</ul>
 					</nav>
 
-					<?php
-					?>
-					<?php
-					while($query->have_posts()){
-						$query->the_post();
-						?>
-						<article id="<?php the_ID();?>">
-						<h3><?php the_title(); ?></h3>
-						<?php
-						if(function_exists('get_field')){
-							// check if it has something in it
-								if(get_field('service')){
-										the_field('service');
+					
+					<!-- seperating the content based on the terms -->
+					 <?php
+					 	$taxonomy = 'fwd-service-type';
+						$terms    = get_terms(
+								array(
+										'taxonomy' => $taxonomy
+								)
+								);
+
+						if($terms && ! is_wp_error($terms)){
+							foreach($terms as $term){
+								$args = array(
+									'post_type'      => 'fwd-service',
+									'posts_per_page' => -1,
+									'order'          =>'ASC',
+									'orderBy'        => 'title',
+									'tax_query'      => array(
+										array(
+											'taxonomy' => $taxonomy,
+											'field'    => 'slug',
+											'terms'    => $term->slug,
+										)
+									)
+								);
+
+								$query = new WP_Query( $args );
+					
+									// Output Term name.
+									echo '<h2>' . esc_html( $term->name ) . '</h2>';
+									// output content
+									while($query->have_posts()){
+										$query->the_post();
+										?>
+										<article id="<?php the_ID();?>">
+										<h3><?php the_title(); ?></h3>
+										<?php
+										if(function_exists('get_field')){
+											// check if it has something in it
+												if(get_field('service')){
+														the_field('service');
+												}
+										}
+										?>
+											</article>
+											<?php
+												wp_reset_postdata();
+
+									
 								}
 						}
-						?>
-							</article>
-							<?php
 					}
 					?>
-					</section>
-					<?php
-					wp_reset_postdata();
+				</section>
+					<?php	
 			}
-
-
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
 		endwhile; // End of the loop.
 		?>
 

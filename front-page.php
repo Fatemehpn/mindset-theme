@@ -24,6 +24,7 @@ get_header();
 		?>
 
 	<section class="home-intro">
+		<h1><?php the_title(); ?></h1>
 		<?php
 			the_post_thumbnail('large');
 		?>
@@ -39,7 +40,14 @@ get_header();
 	<?php
 		$args = array(
 			'post_type'      => 'fwd-work',
-			'posts_per_page' => 4
+			'posts_per_page' => 4,
+			'tax_query'      => array(
+				array(
+					'taxonomy'   => 'fwd-featured',
+					'field'      => 'slug',
+					'terms'      => 'front-page',
+				)
+			)
 		);
 		
 		$query = new WP_Query($args);
@@ -107,7 +115,38 @@ get_header();
 					}
 		?>
 	</section>
-	<section class="home-slider"></section>
+	<section class="home-slider">
+		<?php
+		// output the testimonials
+			$args = array(
+				 'post_type'  =>  'fwd-testimonial',
+				 'posts_per_page' => -1
+			);
+			$query = new WP_Query($args);
+			if($query->have_posts()): ?>
+				<div class='swiper'>
+					<div class='swiper-wrapper'>
+						<?php
+							while($query->have_posts()):
+								$query->the_post();
+								?>
+								<div class='swiper-slide'>
+									<?php the_content(); ?>
+								</div>
+								<?php
+									endwhile;
+									wp_reset_postdata();
+								?>
+					</div>
+					<!-- If we need pagination -->
+  				<div class="swiper-pagination"></div>
+
+					<!-- If we need navigation buttons -->
+					<button class="swiper-button-prev"></button>
+					<button class="swiper-button-next"></button>
+					</div>
+				<?php endif; ?>
+	</section>
 	<section class="home-blog">
 		<h2><?php esc_html_e('Latest blog posts', 'fwd'); ?></h2>  
 		<?php
@@ -150,5 +189,4 @@ get_header();
 	</main><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();

@@ -170,6 +170,12 @@ add_action( 'widgets_init', 'fwd_widgets_init' );
  * Enqueue scripts and styles.
  */
 function fwd_scripts() {
+	wp_enqueue_style(
+		'fwd-googlefonts', //unique handle
+		'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap', //url to the CSS file
+		array(), //dependencies
+		null //version number, for google fonts always set to null
+	);
 	wp_enqueue_style( 'fwd-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'fwd-style', 'rtl', 'replace' );
 
@@ -178,6 +184,43 @@ function fwd_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	// Enqueue swiper files on the home page
+	if(is_front_page()){
+		wp_enqueue_style(
+			'swiper-styles',
+			get_template_directory_uri() . '/css/swiper-bundle.css',
+			array(),
+			'11.1.9'
+		);
+
+		wp_enqueue_script(
+			'swiper-scripts',
+			get_template_directory_uri() . '/js/swiper-bundle.min.js',
+			array(),
+			'11.1.9',
+			array('strategy' => 'defer')
+		);
+
+		// js file made by us not the swiper
+		wp_enqueue_script(
+			'swiper-settings',
+			get_template_directory_uri() . '/js/swiper-settings.js',
+			array('swiper-scripts'),
+			_S_VERSION,
+			array('strategy' => 'defer')
+		);
+	}
+
+	// Enqueue back to top button
+	wp_enqueue_script(
+		 'fwd-back-to-top',
+			get_template_directory_uri() . '/js/back-to-top.js',
+			 array(),
+			  _S_VERSION,
+				array('strategy' => 'defer'));
+
+
 }
 add_action( 'wp_enqueue_scripts', 'fwd_scripts' );
 

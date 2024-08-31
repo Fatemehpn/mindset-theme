@@ -12,6 +12,7 @@
 ?>
 
 	<footer id="colophon" class="site-footer">
+		<?php get_template_part('template-parts/fwd-back-to-top'); ?>
 		<div class="footer-contact">
 			<?php
 		
@@ -19,6 +20,7 @@
 					if ( ! is_page(6) ) {
 							if ( get_field('physical_address', 6) ) {
 									echo '<div class="footer-contact-left">';
+											get_template_part('images/location');
 											the_field('physical_address', 6);
 									echo '</div>';
 							}
@@ -27,6 +29,7 @@
 									$mailto = 'mailto:' . $email;
 									?>
 									<div class="footer-contact-right">
+											<?php get_template_part('images/email'); ?>
 											<p><a href="<?php echo esc_url( $mailto ); ?> "><?php echo esc_html( $email ); ?></a></p>
 									</div>
 									<?php
